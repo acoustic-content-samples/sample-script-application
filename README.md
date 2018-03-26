@@ -33,17 +33,35 @@ Each script application will follow a certain file structure:
    * layout-mappings - WCH layout mappings folder
      * \<content-type-name\>-layout-mapping.json - WCH layout mapping file that links the content type to the code to render the script application in the SPA
    
-1. Create a new content type on WCH. Make a note the name that you use.
-2. In the assets/dxconfig folder, add a new JSON file with the same name as your WCH content type, created in step 1.
-  * The JSON object will contain one property 'path', that will be the relative path from the web assets directory to the kicker index.html file for your script application. This will tell WCH what file needs to be loaded in order to run the script application:
+1. Create a new content type and take note of the name that you use. This can be done in two ways:
+  * From the UI: log in to WCH, open the side navigation. Go to Content model \> Content types \> Create content type 
   
-  e.g.
+  or:
+  
+  * In the content-artifacts directory for your script application, create a 'types' folder. In this folder, create a `<ContentTypeName>.json` file, using the following template as the file contents, replacing the `name` field value with your own content type name:
+  ```
+{
+  "name": "<ContentTypeName>",
+  "classification": "content-type",
+  "kind": [
+    "standalone"
+  ],
+  "description": "",
+  "status": "ready",
+  "tags": [],
+  "elements": []
+}
+  ```
+2. Add your script application code to the web assets folder. It is recommended to place the code within a directory that has the name of the script application.
+3. In the assets/dxconfig folder, add a new JSON file with the same name as your WCH content type from step 1.
+  * The JSON object will contain one property 'path', that will be the relative path from the web assets directory to the kicker index.html file for your script application. This will tell WCH what file needs to be loaded in order to run the script application: 
+ 
+e.g.
   ```
 {
   "path": "scriptApps/myScriptApp/index.html"
 }
   ```
-3. Add your script application code to the web assets folder, in the directory that matches the `"path"` property of the JSON file from step 2.
 4. Configure the layout mapping file for the script application
   * The layout mapping file will link the content type to the code to render the script application.
   * The layout mapping file must follow the following template, replacing anything surrounded by `<>` with the values of the content type from step 1:
