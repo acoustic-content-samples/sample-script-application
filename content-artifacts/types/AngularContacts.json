@@ -1,0 +1,19 @@
+{
+  "id": "d03db371-40ab-4955-9dbd-3d00841e0a68",
+  "name": "AngularContacts",
+  "classification": "content-type",
+  "kind": [
+    "standalone"
+  ],
+  "description": "",
+  "status": "ready",
+  "tags": [],
+  "elements": [
+    {
+      "elementType": "toggle",
+      "label": "allowUpdate",
+      "key": "allowUpdate",
+      "required": true
+    }
+  ]
+}

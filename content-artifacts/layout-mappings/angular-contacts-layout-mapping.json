@@ -1,0 +1,22 @@
+{
+  "id": "angular-contacts-layout-mapping",
+  "name": "AngularContactsLayoutMapping",
+  "classification": "layout-mapping",
+  "type": {
+    "name": "AngularContacts"
+  },
+  "mappings": [
+    {
+      "defaultLayout": {
+        "id": "script-app-layout",
+        "name": "scriptAppLayout"
+      },
+      "layouts": [
+        {
+          "id": "script-app-layout",
+          "name": "scriptAppLayout"
+        }
+      ]
+    }
+  ]
+}
