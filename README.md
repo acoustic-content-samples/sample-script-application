@@ -1,19 +1,28 @@
 # sample-wch-script-application
 
-Sample script application that can be deployed and rendered in the [wch-site-application](https://github.com/ibm-wch/wch-site-application) SPA.
+This is a sample using the "script application" feature that's part of the [Oslo]https://github.com/ibm-wch/wch-site-application) starter site. 
+
+About the script application feature:
+
+The script application feature lets you create a standard web page or SPA (single page application) that can be deployed as a component to WCH. Unlike other components, script applications aren't built into the WCH Angular site application. They run inside an iFrame, without requiring any modification or rebuild of the site application. Since they run in an iFrame they can be built with any JS framework. For example this sample uses Angular 1, not the Angular 5 used by the Oslo starter site.
+
+With script applications, you can let business users configure the application component just like any other components in WCH. A content type defines the elements that are used to configure the component. In this sample there is a single Toggle element for "allowUpdate" which can be used to enable or disable the application's update support. See file {filename] for where renderingContext is referenced.
+
+See this slide deck for more information about components for WCH, including a section on Application components: https://ibm.box.com/s/0od1ta7hsmkxzl2i8y08o06zqwa0pzbq
+
 
 ![Contact list demo image](doc/images/preview-image.png)
 
 ## Table of Contents
 - [Table of Contents](#table-of-contents)
-- [Configure and deploy the script application](#configure-and-deploy-the-script-application)
+- [Configure and deploy the sample script applicationn](#configure-and-deploy-the-sample-script-application)
   - [Configure your wchtools](#configure-your-wchtools)
   - [Deploy the script application](#deploy-the-script-application)
 - [How to configure your own script application](#how-to-configure-your-own-script-application)
-- [Accessing the renderingContext in your script application](#accessing-the-renderingcontext-in-your-script-application)
+- [Accessing content item values in your script application](#accessing-content-item-values-in-your-script-application)
 - [License](#license)
 
-## Configure and deploy the script application
+## Configure and deploy the sample script application
 
 ### Configure your wchtools
 * Get your WCH tenant API URL. Go to your WCH homepage -> YOUR USERNAME tab on top bar -> Hub information -> API URL. Copy the URL.
@@ -29,12 +38,12 @@ Each script application will follow a certain file structure:
    * assets - WCH web assets folder
      * dxconfig - WCH config folder
        * \<ContentTypeName\>.json - JSON config file for the script application
-     * scriptApps - directory that contains the script application
+     * \<folder for script applicatoin\> - directory that contains the script application
    * layout-mappings - WCH layout mappings folder
      * \<content-type-name\>-layout-mapping.json - WCH layout mapping file that links the content type to the code to render the script application in the SPA
    
 1. Create a new content type and take note of the name that you use. This can be done in two ways:
-  * From the UI: log in to WCH, open the side navigation. Go to Content model \> Content types \> Create content type 
+  * RECOMMENDED: From the UI: log in to WCH, open the side navigation. Go to Content model \> Content types \> Create content type 
   
   or:
   
@@ -67,11 +76,11 @@ e.g.
   * The layout mapping file must follow the following template, replacing anything surrounded by `<>` with the values of the content type from step 1:
   ```
 {
-  "id": "<content-type-name>-layout-mapping",
-  "name": "<ContentTypeName>LayoutMapping",
+  "id": "<content-type-name>-layout-mapping", // form the id by replacing spaces in the content type name with dashes
+  "name": "<contentTypeName>LayoutMapping", // typical layout mapping naming convention is to camelCase the content type name and append 'LayoutMapping' to it.
   "classification": "layout-mapping",
   "type": {
-    "name": "<ContentTypeName>"
+    "name": "<Content Type Name>" // this should match the name of your content type exactly
   },
   "mappings": [
     {
@@ -90,12 +99,11 @@ e.g.
 }
 ```
 5. Push the files to WCH:
-  * From a command line, change directories to the newly created content-artifacts directory and run `wchtools push -Afv'
+  * From a command line, change directories to the newly created content-artifacts directory and run `wchtools push -Afv`
 
-After all steps have been completed, the script application content item can be added to the your site, like any other content item.
+After all steps have been completed, the script application content item can be added to the your site, like any other content item. If you want to have configuration or content values that can be set by business users, add elements to the content type. All the values are available in your application as described below.
 
-
-## Accessing the renderingContext in your script application
+## Accessing content item values in your script application
 Though script applications can be rendered without making use of the content type elements, it is easy to integrate them into your script application and enable the business user to configure the script applicaiton. HTML5 messaging is leveraged to send information to and from the script application. Inside the [wchService.js](content-artifacts/assets/scriptApps/AngularContacts/js/wchService.js) file, you can see an example of how this is done.
 ```
 var renderingContext = {};
